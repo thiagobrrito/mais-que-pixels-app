@@ -1,19 +1,15 @@
 // lib/telas/tela_categorias.dart
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'package:meu_primeiro_app/models/categorias.dart';
 import 'package:meu_primeiro_app/models/missao.dart';
-
 import 'package:meu_primeiro_app/services/auth_services.dart';
 import 'package:meu_primeiro_app/services/user_data_service.dart';
 import 'package:meu_primeiro_app/services/mission_service.dart';
-
 import 'package:meu_primeiro_app/telas/detalhe_missao_tela.dart';
-
-// ⭐ MENU GLOBAL PADRONIZADO
 import 'package:meu_primeiro_app/widgets/main_bottom_nav.dart';
-import 'package:meu_primeiro_app/widgets/profile_button.dart'; // NOVO: Import do ProfileButton
+import 'package:meu_primeiro_app/widgets/profile_button.dart';
 
 class TelaCategorias extends StatefulWidget {
   final String? initialCategory;
@@ -92,7 +88,7 @@ class _TelaCategoriasState extends State<TelaCategorias> {
   }
 
   // -------------------------------------------------------
-  // HEADER - mesmo padrão da TelaPrincipal
+  // HEADER
   // -------------------------------------------------------
   Widget _buildHeader() {
     final user = authService.usuario;
@@ -101,7 +97,6 @@ class _TelaCategoriasState extends State<TelaCategorias> {
       padding: const EdgeInsets.all(20),
       child: Row(
         children: [
-          // ⭐ ALTERAÇÃO: ProfileButton no lugar do Avatar estático
           const ProfileButton(),
 
           const SizedBox(width: 12),
@@ -148,7 +143,7 @@ class _TelaCategoriasState extends State<TelaCategorias> {
 
           const Spacer(),
 
-          // Pontos (mantido)
+          // Pontos
           StreamBuilder(
             stream: user == null ? null : userDataService.getUserStream(user.uid),
             builder: (context, snapshot) {
@@ -203,7 +198,7 @@ class _TelaCategoriasState extends State<TelaCategorias> {
   }
 
   // -------------------------------------------------------
-  // SELETOR DE CATEGORIAS (scroll horizontal)
+  // SELETOR DE CATEGORIAS
   // -------------------------------------------------------
   Widget _buildCategorySelector() {
     return SingleChildScrollView(

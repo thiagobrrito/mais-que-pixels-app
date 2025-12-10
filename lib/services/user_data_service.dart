@@ -32,8 +32,7 @@ class UserDataService {
       'missoesConcluidas': FieldValue.increment(1),
     });
   }
-
-  // 🔥🔥🔥 ADICIONE ESTA FUNÇÃO — SALVA NO HISTÓRICO 🔥🔥🔥
+  // Salva histórico de missões concluídas
   Future<void> saveMissionHistory({
     required String uid,
     required String title,

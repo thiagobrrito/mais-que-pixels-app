@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class Missao {
   final String id;
-  final String categoryId;      // corrigido: agora lê categoriaId corretamente
+  final String categoryId;    
   final String categoryIcon;    
   final String categoryTitle;
   final String description;
@@ -28,11 +28,7 @@ class Missao {
   factory Missao.fromFirestore(Map<String, dynamic> map, String id) {
     return Missao(
       id: id,
-
-      // CORREÇÃO PRINCIPAL
-      // Firestore usa "categoriaId", mas seu código lia "categoryId"
       categoryId: map['categoriaId'] ?? map['categoryId'] ?? '',
-
       categoryIcon: map['categoryIcon'] ?? '',
       categoryTitle: map['categoryTitle'] ?? '',
       description: map['description'] ?? '',

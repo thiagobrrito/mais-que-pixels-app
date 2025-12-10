@@ -26,7 +26,6 @@ class EsqueceuSenha extends StatelessWidget {
         ),
       );
       
-      // Opcional: voltar para tela de login após enviar email
       Future.delayed(const Duration(seconds: 2), () {
         Navigator.pushReplacement(
           context,

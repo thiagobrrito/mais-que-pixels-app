@@ -23,13 +23,13 @@ class ProgressoService {
     int pontosAtuais = userData['pontos'] ?? 0;
     int missoesConcluidas = userData['missoesConcluidas'] ?? 0;
 
-    // --- 1) ATUALIZAR PONTOS + MISSÕES CONCLUÍDAS ---
+    // --- ATUALIZAR PONTOS + MISSÕES CONCLUÍDAS ---
     await userRef.update({
       'pontos': pontosAtuais + pontos,
       'missoesConcluidas': missoesConcluidas + 1,
     });
 
-    // --- 2) REGISTRAR NO HISTÓRICO ---
+    // --- REGISTRAR NO HISTÓRICO ---
     await _db.collection('historico_pontos').add({
       'idUsuario': uid,
       'idMissao': idMissao,
@@ -38,13 +38,13 @@ class ProgressoService {
       'data': agora,
     });
 
-    // --- 3) ATUALIZAR OFENSIVA ---
+    // --- ATUALIZAR OFENSIVA ---
     await _atualizarOfensiva(uid);
 
-    // --- 4) ATUALIZAR RECORDE DIÁRIO ---
+    // --- ATUALIZAR RECORDE DIÁRIO ---
     await _atualizarRecorde(uid, agora);
 
-    // --- 5) CHECAR CONQUISTAS ---
+    // --- CHECAR CONQUISTAS ---
     await _verificarConquistas(uid);
   }
 
@@ -104,7 +104,7 @@ class ProgressoService {
 
     int recorde = data['recordeDiario'] ?? 0;
 
-    // Buscar quantas missões o usuário fez HOJE
+    // Buscar quantas missões o usuário fez hoje
     final inicioDia =
         DateTime(agora.year, agora.month, agora.day, 0, 0, 0);
     final fimDia =

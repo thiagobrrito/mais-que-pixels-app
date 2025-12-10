@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 // ---------------------------------------------------------
-// MODELO DE CATEGORIA COM ID (AGORA FUNCIONA NA TELA NOVA)
+// MODELO DE CATEGORIA COM ID
 // ---------------------------------------------------------
 class CategoryModel {
   final String id;
@@ -83,7 +83,7 @@ class MissionModel {
 }
 
 // ---------------------------------------------------------
-// MODELO DETALHADO (Firestore)
+// MODELO DETALHADO
 // ---------------------------------------------------------
 
 enum MissionDifficulty { Facil, Medio, Dificil }

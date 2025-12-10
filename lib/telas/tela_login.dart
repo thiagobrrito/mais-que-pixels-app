@@ -27,7 +27,6 @@ class _LoginPageState extends State<LoginPage> {
     try {
       await context.read<AuthService>().login(email.text, senha.text);
       
-      // RESETA O LOADING MESMO NO SUCESSO
       if (mounted) {
         setState(() {
           loading = false;
@@ -43,7 +42,6 @@ class _LoginPageState extends State<LoginPage> {
             .showSnackBar(SnackBar(content: Text(e.message)));
       }
     } catch (e) {
-      // CAPTURA OUTROS ERROS TAMBÉM
       if (mounted) {
         setState(() {
           loading = false;
@@ -65,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        body: SingleChildScrollView( // ADICIONEI PARA EVITAR OVERFLOW
+        body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.only(top: 100),
             child: Form(
@@ -204,7 +202,7 @@ class _LoginPageState extends State<LoginPage> {
                           borderRadius: BorderRadius.circular(20),
                         ),
                       ),
-                      onPressed: loading ? null : () { // DESABILITA BOTÃO QUANDO LOADING
+                      onPressed: loading ? null : () { 
                         if (formKey.currentState!.validate()) {
                           login();
                         }

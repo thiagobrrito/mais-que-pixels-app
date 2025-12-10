@@ -4,15 +4,14 @@ import 'package:meu_primeiro_app/models/missao.dart';
 class MissionService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  // 🔥 Carregar TODAS as missões
   Future<List<Missao>> getMissions() async {
     try {
       final snapshot = await _firestore.collection('missoes').get();
 
       return snapshot.docs.map((doc) {
         return Missao.fromFirestore(
-          doc.data(), // Map<String, dynamic>
-          doc.id,     // id do documento
+          doc.data(), 
+          doc.id,    
         );
       }).toList();
     } catch (e) {
@@ -21,7 +20,6 @@ class MissionService {
     }
   }
 
-  // 🔥 Carregar missões filtradas por categoria
   Future<List<Missao>> getMissionsByCategory(String categoryTitle) async {
     try {
       final snapshot = await _firestore
@@ -31,8 +29,8 @@ class MissionService {
 
       return snapshot.docs.map((doc) {
         return Missao.fromFirestore(
-          doc.data(), // dados da missão
-          doc.id,     // id da missão
+          doc.data(), 
+          doc.id,    
         );
       }).toList();
     } catch (e) {

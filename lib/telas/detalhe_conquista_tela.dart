@@ -5,7 +5,7 @@ import 'package:meu_primeiro_app/models/conquista.dart';
 import 'package:meu_primeiro_app/models/usuarios.dart';
 import 'package:meu_primeiro_app/services/auth_services.dart';
 import 'package:meu_primeiro_app/services/user_data_service.dart';
-import 'package:meu_primeiro_app/widgets/profile_button.dart'; // NOVO: Import do ProfileButton
+import 'package:meu_primeiro_app/widgets/profile_button.dart';
 
 class DetalheConquistaTela extends StatelessWidget {
   final Conquista conquista;
@@ -27,7 +27,7 @@ class DetalheConquistaTela extends StatelessWidget {
                 const SizedBox(height: 40),
 
                 // ===========================================================
-                // HEADER (foto + Olá + pontos) — IGUAL OUTRAS PÁGINAS
+                // HEADER
                 // ===========================================================
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -64,7 +64,7 @@ class DetalheConquistaTela extends StatelessWidget {
                 const SizedBox(height: 30),
 
                 // ===========================================================
-                // CARTÃO VERDE (medalha + título)
+                // CARTÃO VERDE
                 // ===========================================================
                 Container(
                   width: 280,
@@ -96,7 +96,7 @@ class DetalheConquistaTela extends StatelessWidget {
 
                 const SizedBox(height: 20),
 
-                // Data da conquista (caso exista)
+                // Data da conquista 
                 if (conquista.data != null)
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
@@ -144,7 +144,7 @@ class DetalheConquistaTela extends StatelessWidget {
             ),
           ),
 
-          // BOTÃO COMPARTILHAR (opcional)
+          // BOTÃO COMPARTILHAR
           Positioned(
             top: 45,
             right: 10,
@@ -169,7 +169,6 @@ class DetalheConquistaTela extends StatelessWidget {
         Expanded(
           child: Row(
             children: [
-              // ⭐ ALTERAÇÃO: ProfileButton no lugar do Avatar estático
               const ProfileButton(), 
               const SizedBox(width: 15),
               Expanded(
@@ -228,7 +227,6 @@ class DetalheConquistaTela extends StatelessWidget {
     );
   }
 
-  // Placeholder caso ainda não carregou o usuário
   Widget _buildHeaderPlaceholder() {
     return _buildHeader("Olá!", "0 pontos");
   }

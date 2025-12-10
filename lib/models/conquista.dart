@@ -19,7 +19,7 @@ class Conquista {
       titulo: map['titulo'] ?? '',
       descricao: map['descricao'] ?? '',
       conquistado: map['conquistado'] == true,
-      data: map['data'], // opcional no Firestore
+      data: map['data'],
     );
   }
 }

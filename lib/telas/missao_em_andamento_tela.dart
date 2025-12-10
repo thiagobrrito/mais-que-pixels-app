@@ -8,7 +8,7 @@ import 'package:meu_primeiro_app/services/auth_services.dart';
 import 'package:meu_primeiro_app/services/user_data_service.dart';
 import 'package:meu_primeiro_app/models/usuarios.dart';
 import 'package:provider/provider.dart';
-import 'package:meu_primeiro_app/widgets/profile_button.dart'; // NOVO: Import do ProfileButton
+import 'package:meu_primeiro_app/widgets/profile_button.dart';
 
 class MissaoEmAndamentoTela extends StatefulWidget {
   final Missao missao;
@@ -108,7 +108,6 @@ class _MissaoEmAndamentoTelaState extends State<MissaoEmAndamentoTela> {
     });
   }
 
-  // Função de abandono: cancela timer e volta pra tela inicial
   void _abandonarMissao(BuildContext context) {
     _timer.cancel();
 
@@ -187,7 +186,6 @@ class _MissaoEmAndamentoTelaState extends State<MissaoEmAndamentoTela> {
               Expanded(
                 child: Row(
                   children: [
-                    // ⭐ ALTERAÇÃO: ProfileButton no lugar do Avatar estático
                     const ProfileButton(), 
                     const SizedBox(width: 15),
                     Expanded(
@@ -310,7 +308,6 @@ class _MissaoEmAndamentoTelaState extends State<MissaoEmAndamentoTela> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Mostramos categoriaId (formatado) e dificuldade (do model)
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -379,7 +376,6 @@ class _MissaoEmAndamentoTelaState extends State<MissaoEmAndamentoTela> {
     );
   }
 
-  // Formata o categoryId para uma label mais amigável (ex: "zen" -> "Zen")
   String _formatCategoryLabel(String categoryId) {
     if (categoryId.isEmpty) return '';
     return categoryId[0].toUpperCase() + categoryId.substring(1);

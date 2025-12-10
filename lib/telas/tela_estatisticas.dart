@@ -1,18 +1,14 @@
 // lib/telas/tela_estatisticas.dart
-// HEADER IGUAL AO DA HOME + ÍCONES IGUAIS A TELA PRINCIPAL
 
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'package:meu_primeiro_app/services/stats_service.dart';
 import 'package:meu_primeiro_app/services/auth_services.dart';
 import 'package:meu_primeiro_app/services/user_data_service.dart';
-
 import 'package:meu_primeiro_app/models/usuarios.dart';
 import 'tela_principal.dart';
-import 'package:meu_primeiro_app/widgets/profile_button.dart'; // NOVO: Import do ProfileButton
-
+import 'package:meu_primeiro_app/widgets/profile_button.dart';
 // ------------------------------------------------------------
 // TELA ESTATÍSTICAS
 // ------------------------------------------------------------

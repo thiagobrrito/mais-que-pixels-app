@@ -5,7 +5,7 @@ import 'package:meu_primeiro_app/telas/tela_principal.dart';
 import 'package:provider/provider.dart';
 
 class AuthCheck extends StatefulWidget {
-  AuthCheck({super.key});  // ❌ REMOVIDO const
+  AuthCheck({super.key}); 
 
   @override
   State<AuthCheck> createState() => _AuthCheckState();
@@ -20,15 +20,15 @@ class _AuthCheckState extends State<AuthCheck> {
       return _loading();
     } 
     else if (auth.usuario == null) {
-      return LoginPage();   // ❌ REMOVIDO const
+      return LoginPage();  
     } 
     else {
-      return TelaPrincipal(); // ❌ REMOVIDO const
+      return TelaPrincipal();
     }
   }
 
   Widget _loading() {
-    return Scaffold( // ❌ REMOVIDO const
+    return Scaffold( 
       body: Center(
         child: CircularProgressIndicator(),
       ),

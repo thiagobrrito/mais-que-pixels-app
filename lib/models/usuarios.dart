@@ -6,12 +6,8 @@ class Usuario {
   final String? id; 
   final String nome;
   final String email;
-
-  // Campos de progresso
   final int pontos;
   final int missoesConcluidas;
-
-  // Campo de Perfil
   final String? photoUrl; 
 
   Usuario({
@@ -23,7 +19,7 @@ class Usuario {
     this.photoUrl,
   });
 
-  // Método de conveniência para cópia (manter imutabilidade)
+  // Método de conveniência para cópia
   Usuario copyWith({
     String? id, 
     String? nome, 
@@ -37,13 +33,11 @@ class Usuario {
       nome: nome ?? this.nome,
       email: email ?? this.email,
       pontos: pontos ?? this.pontos,
-      // CORREÇÃO: Usando a variável 'missoesConcluidas' correta
       missoesConcluidas: missoesConcluidas ?? this.missoesConcluidas, 
       photoUrl: photoUrl ?? this.photoUrl,
     );
   }
 
-  // Construtor de Fábrica Padrão para leitura do Firestore
   factory Usuario.fromFirestore(Map<String, dynamic> data, String uid) {
     return Usuario(
       id: uid, 
@@ -55,7 +49,6 @@ class Usuario {
     );
   }
 
-  // Converte para Map para salvar no Firestore
   Map<String, dynamic> toMap() {
     return {
       'nome': nome,

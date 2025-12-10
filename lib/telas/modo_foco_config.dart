@@ -3,14 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import '../services/auth_services.dart';
 import 'modo_foco_em_andamento.dart';
 import 'tela_principal.dart';
-
-// ⭐ IMPORTAÇÃO DO MENU GLOBAL
 import 'package:meu_primeiro_app/widgets/main_bottom_nav.dart';
-import 'package:meu_primeiro_app/widgets/profile_button.dart'; // NOVO: Import do ProfileButton
+import 'package:meu_primeiro_app/widgets/profile_button.dart';
 
 class ModoFocoConfigTela extends StatefulWidget {
   const ModoFocoConfigTela({Key? key}) : super(key: key);
@@ -160,7 +157,6 @@ class _ModoFocoConfigTelaState extends State<ModoFocoConfigTela> {
 
           return Row(
             children: [
-              // ⭐ ALTERAÇÃO: ProfileButton no lugar do Avatar estático
               const ProfileButton(),
               const SizedBox(width: 10),
               Column(

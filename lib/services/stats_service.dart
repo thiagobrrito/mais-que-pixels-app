@@ -5,7 +5,7 @@ class StatsService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   // =====================================================
-  // 1) TOTAL DE MISSÕES CONCLUÍDAS
+  // TOTAL DE MISSÕES CONCLUÍDAS
   // =====================================================
   Future<int> getTotalMissoes(String uid) async {
     final historicoRef =
@@ -16,7 +16,7 @@ class StatsService {
   }
 
   // =====================================================
-  // 2) PONTUAÇÃO TOTAL DO USUÁRIO
+  // PONTUAÇÃO TOTAL DO USUÁRIO
   // =====================================================
   Future<int> getTotalPontos(String uid) async {
     final doc = await _firestore.collection('usuarios').doc(uid).get();
@@ -31,7 +31,7 @@ class StatsService {
   }
 
   // =====================================================
-  // 3) PERCENTUAL POR CATEGORIA
+  // PERCENTUAL POR CATEGORIA
   // =====================================================
   Future<Map<String, double>> getPercentualPorCategoria(
       String uid, List<String> categorias) async {
@@ -105,7 +105,7 @@ class StatsService {
   }
 
   // =====================================================
-  // 4) DIAS SEGUIDOS (STREAK)
+  // DIAS SEGUIDOS
   // =====================================================
   Future<int> getStreak(String uid) async {
     final historicoRef =
@@ -154,7 +154,7 @@ class StatsService {
   }
 
   // =====================================================
-  // 5) RECORDE DE PONTOS EM UM ÚNICO DIA
+  // RECORDE DE PONTOS EM UM ÚNICO DIA
   // =====================================================
   Future<int> getRecordePontosDia(String uid) async {
     final historicoRef =
@@ -184,7 +184,7 @@ class StatsService {
   }
 
   // =====================================================
-  // 6) CONQUISTAS
+  // CONQUISTAS
   // =====================================================
   Future<List<Map<String, dynamic>>> getConquistas(String uid) async {
     final ref = _firestore
@@ -198,7 +198,7 @@ class StatsService {
   }
 
   // =====================================================
-  // 7) ✨ LISTA PARA A TELA "HISTÓRICO"
+  // LISTA PARA A TELA "HISTÓRICO"
   // =====================================================
   Future<List<Map<String, dynamic>>> getCompletedMissions(String uid) async {
     final historicoRef =

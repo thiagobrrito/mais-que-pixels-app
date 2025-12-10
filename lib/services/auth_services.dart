@@ -21,7 +21,7 @@ class AuthService extends ChangeNotifier {
   }
 
   // ============================================================
-  // 1) Monitoramento do estado de autenticação
+  // Monitoramento do estado de autenticação
   // ============================================================
   void _authCheck() {
     _auth.authStateChanges().listen((User? user) async {
@@ -30,7 +30,7 @@ class AuthService extends ChangeNotifier {
       notifyListeners();
 
       if (usuario != null) {
-        await _checkUserDocument(); // 🔥 auto-logout se doc não existir
+        await _checkUserDocument();
       }
     });
   }
@@ -42,7 +42,7 @@ class AuthService extends ChangeNotifier {
   }
 
   // ============================================================
-  // 2) Verificar se documento no Firestore ainda existe
+  // Verificar se documento no Firestore ainda existe
   // ============================================================
   Future<void> _checkUserDocument() async {
     if (usuario == null) return;
@@ -53,22 +53,20 @@ class AuthService extends ChangeNotifier {
         .get();
 
     if (!doc.exists) {
-      await logout(); // 🔥 desloga automaticamente
+      await logout(); 
     }
   }
 
   // ============================================================
-  // 3) Registrar novo usuário
+  // Registrar novo usuário
   // ============================================================
   Future<void> registrar(String nome, String email, String senha) async {
     try {
-      // Cria usuário no Authentication
       UserCredential cred = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: senha,
       );
 
-      // Cria documento no Firestore
       await FirebaseFirestore.instance
           .collection('usuarios')
           .doc(cred.user!.uid)
@@ -88,7 +86,7 @@ class AuthService extends ChangeNotifier {
   }
 
   // ============================================================
-  // 4) Login
+  // Login
   // ============================================================
   Future<void> login(String email, String senha) async {
     try {
@@ -97,7 +95,7 @@ class AuthService extends ChangeNotifier {
         password: senha,
       );
       _getUser();
-      await _checkUserDocument(); // 🔥 caso alguém apague o doc depois
+      await _checkUserDocument();
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         throw AuthException('Email não encontrado. Cadastre-se!');
@@ -109,7 +107,7 @@ class AuthService extends ChangeNotifier {
   }
 
   // ============================================================
-  // 5) Logout
+  // Logout
   // ============================================================
   Future<void> logout() async {
     await _auth.signOut();
@@ -117,9 +115,8 @@ class AuthService extends ChangeNotifier {
   }
 
   // ============================================================
-  // 6) Reautenticação (NOVO MÉTODO PARA TELA DE PERFIL)
+  // Reautenticação
   // ============================================================
-  // Necessário para operações sensíveis como mudar senha/email ou excluir conta.
   Future<void> reauthenticateUser(User user, String password) async {
     final AuthCredential credential = EmailAuthProvider.credential(
       email: user.email!,

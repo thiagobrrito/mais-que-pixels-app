@@ -1,27 +1,19 @@
-// lib/telas/tela_principal.dart (CÓDIGO ATUALIZADO)
+// lib/telas/tela_principal.dart
 
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-// MODELS
 import 'package:meu_primeiro_app/models/missao.dart';
 import 'package:meu_primeiro_app/models/usuarios.dart';
 import 'package:meu_primeiro_app/models/categorias.dart';
-
-// SERVICES
 import 'package:meu_primeiro_app/services/auth_services.dart';
 import 'package:meu_primeiro_app/services/mission_service.dart';
 import 'package:meu_primeiro_app/services/user_data_service.dart';
-
-// TELAS
 import 'package:meu_primeiro_app/telas/detalhe_missao_tela.dart';
 import 'package:meu_primeiro_app/telas/tela_estatisticas.dart';
 import 'package:meu_primeiro_app/telas/tela_login.dart';
 import 'package:meu_primeiro_app/telas/tela_categorias.dart';
 import 'package:meu_primeiro_app/telas/modo_foco_config.dart';
-
-// WIDGETS
 import 'package:meu_primeiro_app/widgets/main_bottom_nav.dart';
 import 'package:meu_primeiro_app/widgets/profile_button.dart';
 
@@ -49,7 +41,6 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
 
   final Random _random = Random();
 
-  // Define um BoxShadow básico para aumentar o contraste do texto
   final List<Shadow> _textShadow = const [
     Shadow(
       blurRadius: 3.0,
@@ -130,9 +121,8 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
           backgroundColor: primaryColor,
           expandedHeight: 200,
           
-          // Adiciona o ProfileButton no AppBar
           actions: const [
-            ProfileButton(), // NOVO: Botão de perfil no canto superior direito
+            ProfileButton(),
           ],
           
           flexibleSpace: FlexibleSpaceBar(
@@ -225,7 +215,7 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
           fontFamily: 'MochiyPopOne',
           fontSize: 28,
           color: Colors.white,
-          shadows: _textShadow, // Aplicando a sombra aqui também
+          shadows: _textShadow,
         ),
       );
     }
@@ -250,7 +240,7 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
                 fontFamily: 'MochiyPopOne',
                 fontSize: 28,
                 color: Colors.white,
-                shadows: _textShadow, // Aplicando a sombra
+                shadows: _textShadow,
               ),
             ),
             const SizedBox(height: 5),
@@ -260,7 +250,7 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
                 fontFamily: 'Lato',
                 fontSize: 16,
                 color: Colors.white,
-                shadows: _textShadow, // Aplicando a sombra
+                shadows: _textShadow,
               ),
             ),
           ],
@@ -269,10 +259,7 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
     );
   }
 
-  // ... (funções _buildMissionCard, _buildCategoryTag, _iconFromString, _buildSectionTitle, _buildCategories, _buildFeaturedChallenges permanecem as mesmas)
-
   Widget _buildMissionCard(Missao mission, Color bg, AuthService auth) {
-    // ... Código da função original ...
     return InkWell(
       onTap: () {
         if (auth.usuario == null) {
@@ -384,7 +371,6 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
   }
 
   Widget _buildCategoryTag(String title, String iconName) {
-    // ... Código da função original ...
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
@@ -414,7 +400,6 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
   }
 
   IconData _iconFromString(String icon) {
-    // ... Código da função original ...
     switch (icon) {
       case "spa":
         return Icons.spa;
@@ -432,7 +417,6 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
   }
 
   Widget _buildSectionTitle(String title) {
-    // ... Código da função original ...
     return Text(
       title,
       style: const TextStyle(
@@ -444,7 +428,6 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
   }
 
   Widget _buildCategories() {
-    // ... Código da função original ...
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -493,7 +476,6 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
   }
 
   Widget _buildFeaturedChallenges(AuthService auth) {
-    // ... Código da função original ...
     final destaques = _missions.take(3).toList();
 
     return SingleChildScrollView(
@@ -579,16 +561,10 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
   Widget build(BuildContext context) {
     final auth = Provider.of<AuthService>(context);
 
-    // O Scaffold deve ser removido daqui, pois o CustomScrollView já o está usando implicitamente
-    // com o SliverAppBar. No entanto, para usar o bottomNavigationBar,
-    // precisamos mantê-lo e envolver o _buildHome com o Scaffold.
-    
-    // Como a lógica do appbar foi movida para _buildHome, mantemos o Scaffold aqui.
     return Scaffold(
       backgroundColor: const Color(0xFF3A6A4D),
       body: _buildBody(auth),
 
-      // ⭐ MENU PADRONIZADO
       bottomNavigationBar: const MainBottomNavBar(currentIndex: 0),
     );
   }

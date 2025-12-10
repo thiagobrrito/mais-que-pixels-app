@@ -1,14 +1,11 @@
-// lib/telas/tela_historico.dart (CÓDIGO COMPLETO PARA SUBSTITUIÇÃO)
+// lib/telas/tela_historico.dart 
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'package:meu_primeiro_app/services/auth_services.dart';
 import 'package:meu_primeiro_app/services/user_data_service.dart';
 import 'package:meu_primeiro_app/services/stats_service.dart';
 import 'package:meu_primeiro_app/models/usuarios.dart';
-
-// Widgets / telas
 import 'package:meu_primeiro_app/widgets/main_bottom_nav.dart';
 import 'package:meu_primeiro_app/widgets/profile_button.dart';
 
@@ -46,33 +43,31 @@ class _TelaHistoricoState extends State<TelaHistorico> {
               )
             : Column(
                 children: [
-                  // cabeçalho (igual padrão)
+                  // cabeçalho
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
                     child: StreamBuilder<Usuario?>(
                       stream: userDataService.getUserStream(uid),
                       builder: (context, snapUser) {
-                        // Variáveis de fallback para o caso de carregamento
                         String nomeDisplay = 'Olá!';
                         String pontosDisplay = '...';
 
                         if (snapUser.hasData && snapUser.data != null) {
                           final usuario = snapUser.data!;
-                          // Usamos o nome formatado e os pontos reais
                           nomeDisplay = 'Olá, ${usuario.nome.split(' ').first}';
-                          pontosDisplay = '${usuario.pontos} pts'; // Mudei para 'pts' para economizar espaço
+                          pontosDisplay = '${usuario.pontos} pts'; 
                         }
                         
                         // --- LAYOUT DO CABEÇALHO ---
                         return Row(
-                          crossAxisAlignment: CrossAxisAlignment.center, // Alinha itens verticalmente
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            // Elemento 1: Profile Button (Agora sem padding extra)
+                            // Elemento 1: Profile Button
                             const ProfileButton(), 
 
                             const SizedBox(width: 12),
                             
-                            // Elemento 2: Nome e Saudação (Expanded para prevenir Overflow)
+                            // Elemento 2: Nome e Saudação
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -98,7 +93,7 @@ class _TelaHistoricoState extends State<TelaHistorico> {
 
                             const SizedBox(width: 8), // Pequeno espaço entre o nome e os pontos
 
-                            // Elemento 3: Container de Pontos (Mais compacto)
+                            // Elemento 3: Container de Pontos
                             Container(
                               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6), // Diminui o padding horizontal
                               decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16)),
@@ -153,7 +148,7 @@ class _TelaHistoricoState extends State<TelaHistorico> {
 
                   const SizedBox(height: 12),
 
-                  // lista de historico (usa FutureBuilder que depende do uid)
+                  // lista de historico 
                   Expanded(
                     child: FutureBuilder<List<Map<String, dynamic>>>(
                       future: statsService.getCompletedMissions(uid),
@@ -184,7 +179,6 @@ class _TelaHistoricoState extends State<TelaHistorico> {
 
                             final title = item['titulo'] ?? item['descricao'] ?? 'Missão Sem Título';
                             
-                            // Lógica de formatação de data
                             String formattedDate = item['data'] is String 
                                 ? item['data'] 
                                 : (item['data'] != null && item['data'].runtimeType.toString().contains('Timestamp'))
@@ -228,7 +222,6 @@ class _TelaHistoricoState extends State<TelaHistorico> {
               ),
       ),
 
-      // MENU PADRONIZADO
       bottomNavigationBar: const MainBottomNavBar(currentIndex: 2),
     );
   }
