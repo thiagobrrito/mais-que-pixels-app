@@ -27,12 +27,14 @@ class _LoginPageState extends State<LoginPage> {
     try {
       await context.read<AuthService>().login(email.text, senha.text);
       
+      // RESETA O LOADING MESMO NO SUCESSO
       if (mounted) {
-        setState(() {
-          loading = false;
-        });
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => TelaPrincipal()),
+        );
       }
-
+      
     } on AuthException catch (e) {
       if (mounted) {
         setState(() {
@@ -63,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        body: SingleChildScrollView(
+        body: SingleChildScrollView( // ADICIONEI PARA EVITAR OVERFLOW
           child: Padding(
             padding: const EdgeInsets.only(top: 100),
             child: Form(
