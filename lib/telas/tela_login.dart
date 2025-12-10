@@ -5,9 +5,9 @@ import 'package:meu_primeiro_app/services/auth_services.dart';
 import 'package:meu_primeiro_app/telas/tela_principal.dart';
 import 'package:provider/provider.dart';
 import 'package:meu_primeiro_app/telas/tela_cadastro.dart';
+import 'package:meu_primeiro_app/telas/tela_esqueceu_senha.dart';
 
 class LoginPage extends StatefulWidget {
-  // CORREÇÃO: Remova 'const' daqui
   LoginPage({Key? key}) : super(key: key); 
 
   @override
@@ -27,23 +27,35 @@ class _LoginPageState extends State<LoginPage> {
     try {
       await context.read<AuthService>().login(email.text, senha.text);
       
-      // EXCLUÍDO: REMOVIDA A NAVEGAÇÃO MANUAL!
-      // Se o login for bem-sucedido, o AuthCheck fará o redirecionamento
-      // automaticamente para a TelaPrincipal.
+      // RESETA O LOADING MESMO NO SUCESSO
+      if (mounted) {
+        setState(() {
+          loading = false;
+        });
+      }
 
     } on AuthException catch (e) {
-      setState(() {
-        loading = false;
-      });
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(e.message)));
+      if (mounted) {
+        setState(() {
+          loading = false;
+        });
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(e.message)));
+      }
+    } catch (e) {
+      // CAPTURA OUTROS ERROS TAMBÉM
+      if (mounted) {
+        setState(() {
+          loading = false;
+        });
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('Erro: $e')));
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-// ... O restante da função build permanece EXATAMENTE igual ...
-
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
@@ -53,156 +65,160 @@ class _LoginPageState extends State<LoginPage> {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        body: Padding(
-          padding: const EdgeInsets.only(top: 100),
-          child: Form(
-            key: formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                // Título
-                const Text(
-                  'Login',               
-                  style: TextStyle(
-                    fontSize: 35,
-                    fontFamily: 'Lato',
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black87,
-                    letterSpacing: -1.5,
+        body: SingleChildScrollView( // ADICIONEI PARA EVITAR OVERFLOW
+          child: Padding(
+            padding: const EdgeInsets.only(top: 100),
+            child: Form(
+              key: formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  // Título
+                  const Text(
+                    'Login',               
+                    style: TextStyle(
+                      fontSize: 35,
+                      fontFamily: 'Lato',
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                      letterSpacing: -1.5,
+                    ),
                   ),
-                ),
 
-                const SizedBox(height: 20),
+                  const SizedBox(height: 20),
 
-                Image.asset(
-                './assets/logo.png',
-                width: 120, 
-                height: 120,
-               
-                ),
+                  Image.asset(
+                    './assets/logo.png',
+                    width: 120, 
+                    height: 120,
+                  ),
 
-              const SizedBox(height: 35),
+                  const SizedBox(height: 35),
    
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-                  child: TextFormField(
-                    controller: email,
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: const Color(0xFFC9D8B6),
-                      prefixIcon: const Icon(Icons.person_outline),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide.none,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+                    child: TextFormField(
+                      controller: email,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: const Color(0xFFC9D8B6),
+                        prefixIcon: const Icon(Icons.person_outline),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide.none,
+                        ),
+                        labelText: 'Digite seu usuário ou e-mail',
                       ),
-                      labelText: 'Digite seu usuário ou e-mail',
-                    ),
-                    keyboardType: TextInputType.emailAddress,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Digite seu Email';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-
-               
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-                  child: TextFormField(
-                    controller: senha,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: const Color(0xFFC9D8B6),
-                      prefixIcon: const Icon(Icons.key_outlined),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide.none,
-                      ),
-                      labelText: 'Digite sua senha',
-                    ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Digite sua senha';
-                      } else if (value.length < 8) {
-                        return 'Sua senha deve ter no mínimo 8 caracteres';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-
-                const SizedBox(height: 10),
-
-                
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      'Não tem uma conta? ',
-                      style: TextStyle(color: Colors.black87, fontSize: 14),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        // CORREÇÃO: Adiciona navegação para o Cadastro
-                        Navigator.push( 
-                          context,
-                          MaterialPageRoute(builder: (_) => CadastroPage()),
-                        );
+                      keyboardType: TextInputType.emailAddress,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Digite seu Email';
+                        }
+                        return null;
                       },
-                      child: Text(
-                        'Cadastre-se aqui',
-                        style: TextStyle(
-                          color: Colors.green[800],
-                          fontWeight: FontWeight.bold,
-                          decoration: TextDecoration.underline,
+                    ),
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+                    child: TextFormField(
+                      controller: senha,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: const Color(0xFFC9D8B6),
+                        prefixIcon: const Icon(Icons.key_outlined),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide.none,
+                        ),
+                        labelText: 'Digite sua senha',
+                      ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Digite sua senha';
+                        } else if (value.length < 8) {
+                          return 'Sua senha deve ter no mínimo 8 caracteres';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+
+                  const SizedBox(height: 10),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'Não tem uma conta? ',
+                        style: TextStyle(color: Colors.black87, fontSize: 14),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push( 
+                            context,
+                            MaterialPageRoute(builder: (_) => CadastroPage()),
+                          );
+                        },
+                        child: Text(
+                          'Cadastre-se aqui',
+                          style: TextStyle(
+                            color: Colors.green[800],
+                            fontWeight: FontWeight.bold,
+                            decoration: TextDecoration.underline,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-
-                const SizedBox(height: 8),
-
-                TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    'Esqueceu sua senha?',
-                    style: TextStyle(
-                      color: Colors.green[800]
-                      ),
+                    ],
                   ),
-                ),
 
-                const SizedBox(height: 20),
+                  const SizedBox(height: 8),
 
-                
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF5E8C61),
-                      minimumSize: const Size(200, 45),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                    ),
-                    onPressed: () {
-                      if (formKey.currentState!.validate()) {
-                        login();
-                      }
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push( 
+                        context,
+                        MaterialPageRoute(builder: (_) => EsqueceuSenha()),
+                      );
                     },
-                    child: (loading)
-                        ? const CircularProgressIndicator(color: Colors.white)
-                        : const Text(
-                            'Logar',
-                            style: TextStyle(fontSize: 20, color: Colors.white),
-                          ),
+                    child: Text(
+                      'Esqueceu sua senha?',
+                      style: TextStyle(
+                        color: Colors.green[800],
+                        fontWeight: FontWeight.bold,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
                   ),
-                ),
-              ],
+
+                  const SizedBox(height: 20),
+
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF5E8C61),
+                        minimumSize: const Size(200, 45),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
+                      onPressed: loading ? null : () { // DESABILITA BOTÃO QUANDO LOADING
+                        if (formKey.currentState!.validate()) {
+                          login();
+                        }
+                      },
+                      child: loading
+                          ? const CircularProgressIndicator(color: Colors.white)
+                          : const Text(
+                              'Logar',
+                              style: TextStyle(fontSize: 20, color: Colors.white),
+                            ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
